@@ -67,25 +67,26 @@ while True:
     # Marcar tarefa como 'completa'
     elif opcao == 3:
         if gerenciador_tarefas:
-            try:
-                numero_tarefa = int(
-                    input("Digite o número da tarefa a ser marcada como concluída: ")
-                )
-                if (
-                    0 <= numero_tarefa < len(gerenciador_tarefas)
-                ):
-                    gerenciador_tarefas[numero_tarefa - 1][
-                        1
-                    ] = "Completa"
-                    print(
-                        f"Tarefa '{gerenciador_tarefas[numero_tarefa - 1][0]}' marcada como completa!"
+            while True:
+                try:
+                    numero_tarefa = int(
+                        input("Digite o número da tarefa a ser marcada como concluída: ")
                     )
-                else:
-                    print("Número inválido.")
-            except ValueError:
-                print(
-                    "Digite um número válido."
-                )
+                    if (
+                        1 <= numero_tarefa <= len(gerenciador_tarefas)
+                    ):
+                        gerenciador_tarefas[numero_tarefa - 1][
+                            1
+                        ] = "Completa"
+                        print(
+                            f"Tarefa '{gerenciador_tarefas[numero_tarefa - 1][0]}' marcada como completa!"
+                        )
+                    else:
+                        print("Número inválido.")
+                except ValueError:
+                    print(
+                        "Digite um número válido."
+                    )
         else:
             print("Nenhuma tarefa registrada.")
 
@@ -114,32 +115,33 @@ while True:
     # Reordenar tarefas
     elif opcao == 5:
         if len(gerenciador_tarefas) > 1:
-            try:
-                numero_tarefa = int(
-                    input("Digite o número da tarefa que deseja mover: ")
-                )
-                nova_posicao = int(
-                    input("Digite a nova posição da tarefa: ")
-                )
+            while True:
+                try:
+                    numero_tarefa = int(
+                        input("Digite o número da tarefa que deseja mover: ")
+                    )
+                    nova_posicao = int(
+                        input("Digite a nova posição da tarefa: ")
+                    )
 
-                # Verifica se o número da tarefa e a nova posição são válidos
-                if 1 <= numero_tarefa <= len(
-                    gerenciador_tarefas
-                ) and 1 <= nova_posicao <= len(gerenciador_tarefas):
-                    # Remove a tarefa da posição original e insere na nova posição
-                    tarefa_movida = gerenciador_tarefas.pop(numero_tarefa - 1)
-                    gerenciador_tarefas.insert(nova_posicao - 1, tarefa_movida)
+                    # Verifica se o número da tarefa e a nova posição são válidos
+                    if 1 <= numero_tarefa <= len(
+                        gerenciador_tarefas
+                    ) and 1 <= nova_posicao <= len(gerenciador_tarefas):
+                        # Remove a tarefa da posição original e insere na nova posição
+                        tarefa_movida = gerenciador_tarefas.pop(numero_tarefa - 1)
+                        gerenciador_tarefas.insert(nova_posicao - 1, tarefa_movida)
+                        print(
+                            "Tarefa reordenada com sucesso!"
+                        )
+                    else:
+                        print(
+                            "Número(s) fora do intervalo."
+                        )
+                except ValueError:
                     print(
-                        "Tarefa reordenada com sucesso!"
+                        "Digite números válidos."
                     )
-                else:
-                    print(
-                        "Número(s) fora do intervalo."
-                    )
-            except ValueError:
-                print(
-                    "Digite números válidos."
-                )
         else:
             print(
                 "Não há tarefas suficientes para reordenar."
