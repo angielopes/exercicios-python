@@ -77,12 +77,12 @@ OPÇÕES:
     # Adicionando unidades ao estoque
     elif opcao == 3:
         if estoque:
-            while True:
-                try: # Continuar
-                    atualizar_qtd = int(
-                input("Deseja adicionar ou retirar itens do estoque?\n"
-                        "[1] Adicionar\n"
-                        "[2] Retirar: "))
+            # while True:
+            #     try: # Continuar
+            #         atualizar_qtd = int(
+            #     input("Deseja adicionar ou retirar itens do estoque?\n"
+            #             "[1] Adicionar\n"
+            #             "[2] Retirar: "))
                 
 
             # Produto
