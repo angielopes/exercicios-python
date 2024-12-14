@@ -22,6 +22,9 @@ Utilize três listas paralelas para gerenciar as informações.
     - Organize as viagens em ordem cronológica, sincronizando as listas.
 9. Sair."""
 
+from datetime import date
+
+ano_atual = date.today().year
 lista_destinos = []
 lista_datas = []
 lista_orcamentos = []
@@ -52,6 +55,7 @@ OPÇÕES:
         except ValueError:
             print("Digite um número válido entre [1] e [9].")
 
+    # Sair
     if opcao == 9:
         print("Finalizando o programa de planejamento de viagens. Até logo!")
         break
@@ -65,17 +69,22 @@ OPÇÕES:
                 if not localizacao:
                     print("O destino não pode estar vazio. Tente novamente.")
                     continue
-                if not localizacao.isalpha():
-                    print("O destino deve conter apenas letra. Tente novamente.")
+                if all(
+                    localizacao.isalpha() or localizacao.isspace()
+                    for localizacao in localizacao
+                ):
+                    break
+                else:
+                    print(
+                        "O destino deve conter apenas letras e espaços. Tente novamente."
+                    )
                     continue
-                break
 
             # Data
             while True:
                 data_viagem = input("Digite a data da viagem (dd/mm/aaaa): ").strip()
                 try:
-                    dia, mes, ano = map(int, data_viagem.split("/"))
-                    assert 1 <= dia <= 31 and 1 <= mes <= 12 and ano > 0
+                    dia, mes, ano = map(int, data_viagem.split("/")) >= ano_atual
                     break
                 except (ValueError, AssertionError):
                     print("Data inválida. Use o formato dd/mm/aaaa.")
@@ -83,7 +92,7 @@ OPÇÕES:
             # Orçamento
             while True:
                 try:
-                    orcamento_estimado = input("Digite o orçamento estimado: ")
+                    orcamento_estimado = input("Digite o orçamento estimado R$: ")
                     orcamento_estimado = orcamento_estimado.replace(",", ".")
                     orcamento_estimado = float(orcamento_estimado)
                     if orcamento_estimado > 0:
@@ -99,16 +108,114 @@ OPÇÕES:
             )
             confirmar = input("Deseja salvar a viagem? (s/n): ").lower().strip()[0]
             if confirmar == "s":
-                lista_viagem.append((localizacao, data_viagem, orcamento_estimado))
+                lista_viagem.append([localizacao, data_viagem, orcamento_estimado])
                 print(f"Viagem para {localizacao} salva com sucesso!")
             else:
                 print("Viagem descartada")
 
-            continuar = (
+            confirmar = (
                 input("Deseja adicionar outra viagem? (s/n): ").lower().strip()[0]
             )
             if confirmar == "n":
                 print("Voltando ao menú.")
                 break
 
+    # Remover viagem da lista
+    elif opcao == 2:
+        if lista_viagem:
+            print("\nVIAGENS")
+            for indice, (localizacao, data_viagem, orcamento_estimado) in enumerate(
+                lista_viagem, start=1
+            ):
+                print(
+                    f"{indice}. {localizacao} - Data: {data_viagem} - Orçamento: R$ {orcamento_estimado}"
+                )
+
+            while True:
+                try:
+                    indice_remover_viagem = int(
+                        input("Digite o índice da viagem que deseja remover: ")
+                    )
+                    if 1 <= indice_remover_viagem <= len(lista_viagem):
+                        viagem_removida = lista_viagem.pop(indice_remover_viagem - 1)
+                        print(
+                            f"Viagem para '{viagem_removida[0]}' removida da lista com sucesso!"
+                        )
+                        break
+                    else:
+                        print("Índice não encontrado. Insira um existente.")
+                except ValueError:
+                    print("Digite um número que seja válido para o índice.")
+
+        else:
+            print("A lista de viagens planejadas está vazia.")
+
+    # Atualizar informações da viagem
+    elif opcao == 3:
+        if lista_viagem:
+            print("\nVIAGENS")
+            for indice, (localizacao, data_viagem, orcamento_estimado) in enumerate(
+                lista_viagem, start=1
+            ):
+                print(
+                    f"{indice}. {localizacao} - Data: {data_viagem} - Orçamento: R$ {orcamento_estimado}"
+                )
+
+            while True:
+                opcao_atualizar = input(
+                    "Deseja atualizar qual informação?\n[1] Data\n[2] Orçamento: "
+                ).strip()
+
+                if opcao_atualizar in ["1", "2"]:
+                    # Pedir índice
+                    while True:
+                        try:
+                            indice_atualizacao = int(
+                                input(
+                                    "Digite o índice da viagem que deseja atualizar: "
+                                )
+                            )
+                            if 1 <= indice_atualizacao <= len(lista_viagem):
+                                break
+                            else:
+                                print("Índice não encontrado. Tente novamente.")
+                        except ValueError:
+                            print("Por favor, insira um número válido.")
+
+                    # Atualizar data
+                    if opcao_atualizar == "1":
+                        while True:
+                            nova_data = input(
+                                "Digite a nova data (dd/mm/aaaa): "
+                            ).strip()
+                            try:
+                                dia, mes, ano = map(int, nova_data.split("/"))
+                                if 1 <= dia <= 31 and 1 <= mes <= 12 and ano >= ano_atual:
+                                    # ano atual
+                                    lista_viagem[indice_atualizacao - 1][1] = nova_data
+                                    print("Data atualizada com sucesso!")
+                                    break
+                            except ValueError:
+                                print("Data inválida. Tente novamente.")
+
+                    elif opcao == "2":
+                        while True:
+                            novo_orcamento = input(
+                                "Informe o novo orçamento R$: "
+                            ).strip()
+                            try:
+                                novo_orcamento = float(novo_orcamento.replace(",", "."))
+                                lista_viagem[indice_atualizacao - 1][2] = novo_orcamento
+                                print("Orçamento atualizado com sucesso!")
+                                break
+                            except ValueError:
+                                print("Digite um orçamento válido.")
+
+                    break
+
+                else:
+                    print("Opção inválida. Por favor digite '1' ou '2'.")
+
+
 print(lista_viagem)
+print(ano_atual)
