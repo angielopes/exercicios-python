@@ -1,38 +1,37 @@
-# Exercícios Python
-Repositório com exercícios de Python para prática e aprendizado.
+# Python Exercises
+Repository with Python exercises for practice and learning.
 
-## 📂 Estrutura do Repositório
-Os exercícios estão organizados por nível de dificuldade:
+## 📂 Repository Structure
+The exercises are organized by difficulty level:
 
-<b>Fáceis:</b> Exercícios para introdução à lógica de programação e conceitos básicos.
+**Easy:** Exercises for introducing programming logic and basic concepts.
 
-<b>Médios:</b> Problemas que exigem maior raciocínio e aplicação de estruturas de dados.
+**Medium:** Problems that require more reasoning and application of data structures.
 
-<b>Difíceis:</b> Desafios mais complexos para aprofundar os conhecimentos.
+**Hard:** More complex challenges to deepen your knowledge.
 
-Cada exercício é nomeado com um número e um indicador de status (por exemplo, `001_nome_do_exercicio_resolvido.py`).
+Each exercise is named with a number and a status indicator (e.g., `001_exercise_name_solved.py`).
 
-## 🚀 Objetivo
-Este repositório foi criado para centralizar meus estudos e evolução em Python, praticando lógica de programação,
-manipulação de dados e desenvolvimento de soluções para problemas diversos.
+## 🚀 Objective
+This repository was created to centralize my studies and progress in Python, practicing programming logic, data manipulation, and developing solutions for various problems.
 
-## 🛠️ Ferramentas
-<b>Python 3.13+</b>
+## 🛠️ Tools
+**Python 3.13+**
 
-Gerenciador de versões <b>Git</b>
+Version manager: **Git**
 
-Ferramenta usada: <b>VS Code</b>
+Tool used: **VS Code**
 
-## 📌 Próximos Passos
-Resolver mais exercícios.
-Revisar e otimizar soluções existentes.
-Adicionar testes automatizados aos exercícios resolvidos.
+## 📌 Next Steps
+- Solve more exercises.
+- Review and optimize existing solutions.
+- Add automated tests to solved exercises.
 
-## 💡 Contribuições
-Este repositório é pessoal, mas se quiser sugerir melhorias ou apontar erros, fique à vontade para abrir uma issue ou enviar um pull request. 😊
+## 💡 Contributions
+This repository is personal, but if you want to suggest improvements or point out errors, feel free to open an issue or send a pull request. 😊
 
-## 📫 Contato
+## 📫 Contact
 
-Você pode me encontrar no LinkedIn:
+You can find me on LinkedIn:
 
 [LinkedIn - Angela Lopes](https://www.linkedin.com/in/angelalopes97/)
