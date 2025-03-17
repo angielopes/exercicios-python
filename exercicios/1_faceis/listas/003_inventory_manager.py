@@ -13,75 +13,104 @@
     If this happens, only update the quantity.
 """
 
-inventory = []
+from utils import confirm_action, get_valid_int, get_valid_string
+
+
+class Product:
+
+    def __init__(self, name, quantity):
+
+        self.name = name
+        self.quantity = quantity
+
+
+class Inventory:
+
+    def __init__(self):
+
+        self.products = []
+
+    def add_product(self, product_name, quantity):
+        # Check if the product already exists in the inventory
+        for product in self.products:
+            if product.name == product_name:
+                product.quantity += quantity
+                print(f"{quantity} units added to the product {product_name}.")
+                return
+
+        new_product = Product(product_name, quantity)
+        self.products.append(new_product)
+        print(f"{quantity} units added to the new product {product_name}.")
+
+    def remove_product(self, product_name, quantity):
+
+        for product in self.products:
+            if product.name == product_name:
+                if product.quantity >= quantity:  # Check if there is enough quantity
+                    product.quantity -= quantity
+                    print(f"{quantity} removed from the product {product_name}")
+
+                    # If the quantity reaches zero, remove the product from inventory
+                    if product.quantity == 0:
+                        self.products.remove(product)
+                        print(
+                            f"Product {product_name} is out of stock and removed from the inventory."
+                        )
+                    return
+                else:
+                    print("Insufficient quantity in inventory!")
+                return
+
+        print("Product not found.")
+
+    def display_inventory(self):
+
+        # Display inventory after each iteration
+        if self.products:
+            print("\nCurrent inventory:")
+            for product in self.products:
+                print(f"{product.name}: {product.quantity} units.")
+        else:
+            print("Inventory is empty.")
+
+
+# Run program
+
+my_inventory = Inventory()
 
 while True:
     # Inventory menu
     print(
         """\nOPTIONS:
-    [1] Add product
-    [2] Remove product
-    [3] View inventory
-    [4] Exit
-    """
+            [1] Add product
+            [2] Remove product
+            [3] View inventory
+            [4] Exit
+            """
     )
-    try:
-        option = int(input("Choose an option: "))
-    except ValueError:
-        print("Please enter a valid number.")
-        continue
+
+    option = get_valid_int("Choose an option: ", min_value=1, max_value=4)
 
     # Exit the program
     if option == 4:
-        print("Program finished...")
-        break
+        if confirm_action("Are you sure you want to exit?"):
+            print("Program finished...")
+            break
 
     # Add products
     elif option == 1:
-        product = input("Product name: ").capitalize()
-        initial_qty = int(input("Quantity to be added: "))
-
-        # Check if the product already exists in the inventory
-        for item in inventory:
-            if item[0] == product:
-                item[1] += initial_qty
-                print(f"{initial_qty} units added to the product {product}")
-                break
-        else:
-            inventory.append([product, initial_qty])
-            print(f"{initial_qty} units added to the new product {product}")
+        product = get_valid_string("Product name: ")
+        initial_qty = get_valid_int("Quantity to be added: ", min_value=1)
+        my_inventory.add_product(product, initial_qty)
+        my_inventory.display_inventory()
 
     # Remove products
     elif option == 2:
-        remove_product = input("Product name: ").capitalize()
-        remove_qty = int(input("Quantity to be removed: "))
+        remove_product = get_valid_string("Product name: ")
+        remove_qty = get_valid_int("Quantity to be removed: ", min_value=1)
+        my_inventory.remove_product(remove_product, remove_qty)
+        my_inventory.display_inventory()
 
-        for item in inventory:
-            if item[0] == remove_product:
-                if item[1] >= remove_qty:  # Check if there is enough quantity
-                    item[1] -= remove_qty
-                    print(f"{remove_qty} removed from the product {remove_product}")
-                    if item[1] == 0:
-                        inventory.remove(item)
-                        print(
-                            f"Product {remove_product} is out of stock and removed from the inventory."
-                        )
-                else:
-                    print("Insufficient quantity in inventory!")
-                break
-        else:
-            print("Product not found.")
-
-    # Show inventory
+    # Display inventory
     elif option == 3:
-        print("\nDisplaying full inventory...")
-    else:
-        print("Invalid option. Try again.")
-
-    # Display inventory after each iteration
-    if inventory:
-        print("\nCurrent inventory:")
-        for item in inventory:
-            print(f"{item[0]}: {item[1]} units")
-    else:
-        print("Inventory is empty.")
+        my_inventory.display_inventory()
