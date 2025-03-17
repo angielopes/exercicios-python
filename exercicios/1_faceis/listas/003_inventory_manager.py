@@ -1,87 +1,87 @@
-"""Crie um programa que gerencie o estoque de uma loja. O programa deve permitir:
-1. Adicionar produtos ao estoque com:
-    - Nome do produto.
-    - Quantidade inicial do produto.
-2. Remover produtos do estoque:
-    - O usuário deve informar o nome do produto e a quantidade a ser retirada.
-    - Caso a quantidade retirada seja maior do que a disponível, exiba uma mensagem de erro
-    e peça outra entrada.
-3. Exibir o estoque atualizado:
-    - Após cada operação de adição ou remoção, mostre a lista de produtos e suas quantidades.
-*  Desafio bônus:
-    - Não permita que produtos com o mesmo nome sejam adicionados ao estoque.
-    Se isso ocorrer, apenas atualize a quantidade.
+"""Create a program that manages the inventory of a store. The program must allow:
+1. Adding products to the inventory with:
+    - Product name.
+    - Initial quantity of the product.
+2. Removing products from the inventory:
+    - The user must provide the product name and the quantity to be removed.
+    - If the quantity to be removed is greater than the available quantity, display an error message
+    and ask for another input.
+3. Display the updated inventory:
+    - After each addition or removal operation, show the list of products and their quantities.
+*  Bonus challenge:
+    - Do not allow products with the same name to be added to the inventory.
+    If this happens, only update the quantity.
 """
 
-estoque = []
+inventory = []
 
 while True:
-    # Menu do estoque
+    # Inventory menu
     print(
-        """\nOPÇÕES:
-    [1] Adicionar produto
-    [2] Remover produto
-    [3] Ver estoque
-    [4] Sair
+        """\nOPTIONS:
+    [1] Add product
+    [2] Remove product
+    [3] View inventory
+    [4] Exit
     """
     )
     try:
-        opcao = int(input("Escolha uma opção: "))
+        option = int(input("Choose an option: "))
     except ValueError:
-        print("Por favor, digite um número válido.")
+        print("Please enter a valid number.")
         continue
 
-    # Sair do programa
-    if opcao == 4:
-        print("Programa finalizado...")
+    # Exit the program
+    if option == 4:
+        print("Program finished...")
         break
 
-    # Adicionar produtos
-    elif opcao == 1:
-        produto = input("Nome do produto: ").capitalize()
-        qtd_inicial = int(input("Quantidade a ser adicionada: "))
+    # Add products
+    elif option == 1:
+        product = input("Product name: ").capitalize()
+        initial_qty = int(input("Quantity to be added: "))
 
-        # Verificar se o produto já existe no estoque
-        for item in estoque:
-            if item[0] == produto:
-                item[1] += qtd_inicial
-                print(f"{qtd_inicial} unidades adicionados ao produto {produto}")
+        # Check if the product already exists in the inventory
+        for item in inventory:
+            if item[0] == product:
+                item[1] += initial_qty
+                print(f"{initial_qty} units added to the product {product}")
                 break
         else:
-            estoque.append([produto, qtd_inicial])
-            print(f"{qtd_inicial} unidades adicionadas ao novo produto {produto}")
+            inventory.append([product, initial_qty])
+            print(f"{initial_qty} units added to the new product {product}")
 
-    # Remover produtos
-    elif opcao == 2:
-        remover_produto = input("Nome do produto: ").capitalize()
-        qtd_retirada = int(input("Quantidade a ser retirada: "))
+    # Remove products
+    elif option == 2:
+        remove_product = input("Product name: ").capitalize()
+        remove_qty = int(input("Quantity to be removed: "))
 
-        for item in estoque:
-            if item[0] == remover_produto:
-                if item[1] >= qtd_retirada:  # Verifica se tem quantidade suficiente
-                    item[1] -= qtd_retirada
-                    print(f"{qtd_retirada} removidos do produto {remover_produto}")
+        for item in inventory:
+            if item[0] == remove_product:
+                if item[1] >= remove_qty:  # Check if there is enough quantity
+                    item[1] -= remove_qty
+                    print(f"{remove_qty} removed from the product {remove_product}")
                     if item[1] == 0:
-                        estoque.remove(item)
+                        inventory.remove(item)
                         print(
-                            f"Produto {remover_produto} esgotado e removido do estoque."
+                            f"Product {remove_product} is out of stock and removed from the inventory."
                         )
                 else:
-                    print("Quantidade insuficiente em estoque!")
+                    print("Insufficient quantity in inventory!")
                 break
         else:
-            print("Produto não encontrado.")
+            print("Product not found.")
 
-    # Mostrar estoque
-    elif opcao == 3:
-        print("\nExibindo estoque completo...")
+    # Show inventory
+    elif option == 3:
+        print("\nDisplaying full inventory...")
     else:
-        print("Opção inválida. Tente novamente.")
+        print("Invalid option. Try again.")
 
-    # Exibir estoque após cada iteração
-    if estoque:
-        print("\nEstoque atual:")
-        for item in estoque:
-            print(f"{item[0]}: {item[1]} unidades")
+    # Display inventory after each iteration
+    if inventory:
+        print("\nCurrent inventory:")
+        for item in inventory:
+            print(f"{item[0]}: {item[1]} units")
     else:
-        print("Estoque está vazio.")
+        print("Inventory is empty.")
