@@ -17,20 +17,69 @@ from utils import confirm_action, get_valid_int, get_valid_string
 
 
 class Product:
+    """
+    A class used to represent a Product.
+
+    Attributes
+    ----------
+    name : str
+        The name of the product.
+    quantity : int
+        The quantity of the product in stock.
+
+    Methods
+    -------
+    __init__(name, quantity)
+        Initializes the Product with a name and quantity.
+    """
 
     def __init__(self, name, quantity):
-
+        """
+        Initialize an InventoryManager object.
+        Parameters:
+            name (str): The name of the item.
+            quantity (int): The quantity of the item in inventory.
+        """
         self.name = name
         self.quantity = quantity
 
 
 class Inventory:
+    """
+    A class to manage an inventory of products.
+
+    Attributes
+    ----------
+    products : list
+        A list to store the products in the inventory.
+
+    Methods
+    -------
+    add_product(product_name, quantity):
+        Adds a specified quantity of a product to the inventory.
+        If the product already exists, it updates the quantity.
+    remove_product(product_name, quantity):
+        Removes a specified quantity of a product from the inventory.
+        If the quantity reaches zero, the product is removed from the inventory.
+    display_inventory():
+        Displays the current inventory with product names and their quantities.
+    """
 
     def __init__(self):
-
+        """
+        Initializes the InventoryManager with an empty list of products.
+        """
         self.products = []
 
     def add_product(self, product_name, quantity):
+        """
+        Adds a product to the inventory. If the product already exists, it updates the quantity.
+        Args:
+            product_name (str): The name of the product to add or update.
+            quantity (int): The quantity of the product to add.
+        Returns:
+            None
+        """
         # Check if the product already exists in the inventory
         for product in self.products:
             if product.name == product_name:
@@ -43,7 +92,19 @@ class Inventory:
         print(f"{quantity} units added to the new product {product_name}.")
 
     def remove_product(self, product_name, quantity):
-
+        """
+        Removes a specified quantity of a product from the inventory.
+        Args:
+            product_name (str): The name of the product to be removed.
+            quantity (int): The quantity of the product to be removed.
+        Returns:
+            None
+        Prints:
+            A message indicating the quantity removed and the product name.
+            A message indicating if the product is out of stock and removed from the inventory.
+            A message indicating insufficient quantity in inventory if the requested quantity is more than available.
+            A message indicating the product is not found if the product does not exist in the inventory.
+        """
         for product in self.products:
             if product.name == product_name:
                 if product.quantity >= quantity:  # Check if there is enough quantity
@@ -64,7 +125,11 @@ class Inventory:
         print("Product not found.")
 
     def display_inventory(self):
-
+        """
+        Display the current inventory of products.
+        This method prints the name and quantity of each product in the inventory.
+        If the inventory is empty, it notifies the user that the inventory is empty.
+        """
         # Display inventory after each iteration
         if self.products:
             print("\nCurrent inventory:")
